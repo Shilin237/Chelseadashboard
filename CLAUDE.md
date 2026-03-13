@@ -6,11 +6,12 @@ This file provides context and conventions for AI assistants (including Claude C
 
 ## Project Overview
 
-**Chelseadashboard** is a dashboard application currently in initial setup. As of the last update to this document, the repository is a blank slate awaiting its first scaffolding and technology decisions.
+**Chelseadashboard** is a personal dashboard application built with Next.js 15 and Tailwind CSS, deployable to Vercel.
 
 - **Repository:** Shilin237/Chelseadashboard
-- **Status:** Early-stage / pre-scaffolding
+- **Status:** Active development
 - **Main branch:** `main`
+- **Deployment:** Vercel (auto-deploy from `main`)
 
 ---
 
@@ -18,72 +19,74 @@ This file provides context and conventions for AI assistants (including Claude C
 
 ```
 Chelseadashboard/
-├── CLAUDE.md         # This file — AI assistant guide
-└── README.md         # Project overview (minimal)
+├── src/
+│   └── app/
+│       ├── globals.css       # Global styles + Tailwind imports
+│       ├── layout.tsx        # Root layout (metadata, body wrapper)
+│       └── page.tsx          # Dashboard home page
+├── CLAUDE.md                 # This file — AI assistant guide
+├── README.md                 # Public-facing project overview
+├── next.config.ts            # Next.js configuration
+├── tailwind.config.ts        # Tailwind CSS configuration
+├── postcss.config.js         # PostCSS configuration
+├── tsconfig.json             # TypeScript configuration
+├── package.json              # Dependencies and scripts
+└── .gitignore
 ```
-
-> Update this section as directories and files are added.
 
 ---
 
 ## Technology Stack
 
-> This section will be filled in once the stack is chosen and scaffolded.
+| Layer | Technology | Version |
+|-------|-----------|---------|
+| Framework | Next.js (App Router) | 15.2.1 |
+| Language | TypeScript | ^5 |
+| Styling | Tailwind CSS | ^3.4 |
+| Runtime | React | ^19 |
+| Package manager | npm | — |
+| Deployment | Vercel | — |
 
-### Anticipated / Likely Stack
-As this is a dashboard project, it will likely include:
-- A frontend framework (React, Vue, or Next.js)
-- A styling solution (Tailwind CSS, CSS Modules, or a component library)
-- A backend or API layer (Node.js, Python, or serverless functions)
-- A data store (PostgreSQL, SQLite, or a managed service)
-
-**Once the stack is decided, document the following here:**
-- Language versions (Node.js vX, Python 3.X, etc.)
-- Package manager (npm / pnpm / yarn / pip)
-- Framework versions
-- Key libraries and their purposes
+### Key Conventions
+- Uses the **App Router** (`src/app/`) — not the Pages Router
+- All pages are Server Components by default; add `"use client"` only when needed
+- Tailwind utility classes for all styling — no CSS-in-JS or external component libraries (yet)
 
 ---
 
 ## Development Setup
 
-> Populate this section once the project is scaffolded.
-
 ### Prerequisites
 
 ```bash
-# Example (update with actual requirements):
-node --version    # e.g., >= 20.x
-npm --version     # or pnpm / yarn
+node --version    # >= 20.x recommended
+npm --version     # >= 10.x
 ```
 
 ### Installation
 
 ```bash
-# Clone and install (update with actual commands):
 git clone https://github.com/Shilin237/Chelseadashboard.git
 cd Chelseadashboard
-npm install       # or pnpm install / yarn
+npm install
 ```
-
-### Environment Variables
-
-Copy `.env.example` to `.env` and fill in the required values:
-
-```bash
-cp .env.example .env
-```
-
-> Add `.env.example` to the repository with all required keys and safe placeholder values. Never commit real secrets.
 
 ### Running Locally
 
 ```bash
-# Update with actual dev commands once determined:
-npm run dev       # Start development server
+npm run dev       # Start dev server at http://localhost:3000
 npm run build     # Production build
 npm run start     # Start production server
+npm run lint      # Run ESLint
 ```
+
+### Vercel Deployment
+
+The project is configured for zero-config Vercel deployment:
+1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new)
+2. Vercel auto-detects Next.js — no build config changes needed
+3. Every push to `main` triggers an automatic production deploy
+4. Every PR gets an automatic preview deployment URL
 
 ---
 
@@ -149,12 +152,12 @@ chore: upgrade dependencies to latest
 | Constants | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT` |
 | CSS classes | kebab-case | `user-profile__avatar` |
 
-### TypeScript (if adopted)
+### TypeScript
 
 - Prefer `interface` for object shapes, `type` for unions/intersections
 - Avoid `any` — use `unknown` and narrow with type guards
 - Keep types co-located with the code that uses them (unless shared widely)
-- Use strict mode (`"strict": true` in `tsconfig.json`)
+- Strict mode is enabled (`"strict": true` in `tsconfig.json`)
 
 ### API / Data Fetching
 
@@ -192,17 +195,13 @@ npm run test:coverage # Coverage report
 
 ## Linting & Formatting
 
-> Populate once tooling is configured.
-
 ```bash
-npm run lint        # Run linter
-npm run lint:fix    # Auto-fix lint issues
-npm run format      # Run formatter (e.g., Prettier)
+npm run lint        # Run ESLint (via next lint)
 ```
 
-- **ESLint** (or equivalent) should be run before every commit
-- **Prettier** (or equivalent) for consistent formatting — use editor integration
-- Fix all linting errors before opening a PR; warnings should be minimized
+- **ESLint** is configured via `eslint-config-next`
+- Run lint before opening a PR; fix all errors, minimize warnings
+- Prettier is not yet configured — follow the existing code style manually
 
 ---
 
@@ -244,7 +243,7 @@ Claude should **pause and confirm** before:
 | `CLAUDE.md` | This guide — update when conventions change |
 | `README.md` | Public-facing project overview |
 | `.env.example` | Environment variable template (to be created) |
-| `package.json` | Dependencies and scripts (to be created) |
+| `package.json` | Dependencies and scripts |
 
 ---
 
@@ -256,4 +255,4 @@ This file should be updated whenever:
 - Development workflow changes
 - New team members or AI assistants need onboarding context
 
-Last updated: 2026-03-13
+Last updated: 2026-03-13 — scaffolded Next.js 15 + Tailwind CSS, configured for Vercel deployment
